@@ -143,8 +143,8 @@ const CreateModal = ({
                 cursor={'pointer'}
                 onClick={() => window.open(getDocPath(datasetTypeCourseMap[type]), '_blank')}
               >
-                <MyIcon name={'book'} w={4} mr={0.5} />
-                {t('common:Instructions')}
+                {/* <MyIcon name={'book'} w={4} mr={0.5} />
+                {t('common:Instructions')} */}
               </Flex>
             )}
           </Flex>

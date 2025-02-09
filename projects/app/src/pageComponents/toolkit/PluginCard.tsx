@@ -95,8 +95,8 @@ const PluginCard = ({
                   onClick={onClick}
                   _hover={{ bg: 'myGray.100' }}
                 >
-                  <MyIcon name={'book'} w={'14px'} />
-                  {t('app:plugin.Instructions')}
+                  {/* <MyIcon name={'book'} w={'14px'} /> */}
+                  {/* {t('app:plugin.Instructions')} */}
                 </Flex>
               )}
             </UseGuideModal>

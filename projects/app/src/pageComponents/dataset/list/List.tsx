@@ -259,7 +259,7 @@ function List() {
                     color={'myGray.500'}
                   >
                     <HStack spacing={3.5}>
-                      <UserBox
+                      {/* <UserBox
                         sourceMember={dataset.sourceMember}
                         fontSize="xs"
                         avatarSize="1rem"
@@ -270,7 +270,7 @@ function List() {
                         private={dataset.private}
                         iconColor="myGray.400"
                         color={'myGray.500'}
-                      />
+                      /> */}
                     </HStack>
 
                     <HStack>
@@ -339,15 +339,15 @@ function List() {
                                         }
                                       ]
                                     : []),
-                                  ...(dataset.permission.hasManagePer
-                                    ? [
-                                        {
-                                          icon: 'key',
-                                          label: t('common:permission.Permission'),
-                                          onClick: () => setEditPerDatasetIndex(index)
-                                        }
-                                      ]
-                                    : [])
+                                  // ...(dataset.permission.hasManagePer
+                                  //   ? [
+                                  //       {
+                                  //         icon: 'key',
+                                  //         label: t('common:permission.Permission'),
+                                  //         onClick: () => setEditPerDatasetIndex(index)
+                                  //       }
+                                  //     ]
+                                  //   : [])
                                 ]
                               },
                               ...(dataset.type != DatasetTypeEnum.folder

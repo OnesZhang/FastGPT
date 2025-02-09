@@ -222,18 +222,18 @@ const ListItem = () => {
                   color={'myGray.500'}
                 >
                   <HStack spacing={3.5}>
-                    <UserBox
+                    {/* <UserBox
                       sourceMember={app.sourceMember}
                       fontSize="xs"
                       avatarSize="1rem"
                       spacing={0.5}
-                    />
-                    <PermissionIconText
+                    /> */}
+                    {/* <PermissionIconText
                       private={app.private}
                       color={'myGray.500'}
                       iconColor={'myGray.400'}
                       w={'0.875rem'}
-                    />
+                    /> */}
                   </HStack>
 
                   <HStack>
@@ -331,16 +331,16 @@ const ListItem = () => {
                                               onClick: () => setMoveAppId(app._id)
                                             }
                                           ]),
-                                      ...(app.permission.hasManagePer
-                                        ? [
-                                            {
-                                              icon: 'key',
-                                              type: 'grayBg' as MenuItemType,
-                                              label: t('common:permission.Permission'),
-                                              onClick: () => setEditPerAppIndex(index)
-                                            }
-                                          ]
-                                        : [])
+                                      // ...(app.permission.hasManagePer
+                                      //   ? [
+                                      //       {
+                                      //         icon: 'key',
+                                      //         type: 'grayBg' as MenuItemType,
+                                      //         label: t('common:permission.Permission'),
+                                      //         onClick: () => setEditPerAppIndex(index)
+                                      //       }
+                                      //     ]
+                                      //   : [])
                                     ]
                                   }
                                 ]
