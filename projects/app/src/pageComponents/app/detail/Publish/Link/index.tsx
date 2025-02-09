@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   Flex,
   Box,
@@ -48,8 +48,24 @@ import EmptyTip from '@fastgpt/web/components/common/EmptyTip';
 import FormLabel from '@fastgpt/web/components/common/MyBox/FormLabel';
 import MyBox from '@fastgpt/web/components/common/MyBox';
 import { useRequest2 } from '@fastgpt/web/hooks/useRequest';
+import crypto from 'crypto';
 
 const SelectUsingWayModal = dynamic(() => import('./SelectUsingWayModal'));
+
+const SECRET_KEY = process.env.SHARE_AUTH_SECRET_KEY || 'FastGPT_SHARE_SECRET';
+
+// 生成 authToken
+function generateAuthToken(userId: string) {
+  const timestamp = Date.now().toString();
+  const data = `${userId}i${timestamp}`;
+  
+  const signature = crypto
+    .createHmac('sha256', SECRET_KEY)
+    .update(data)
+    .digest('hex');
+  
+  return `${userId}i${timestamp}i${signature}`;
+}
 
 const Share = ({ appId }: { appId: string; type: PublishChannelEnum }) => {
   const { t } = useTranslation();
@@ -270,15 +286,18 @@ function EditLinkModal({
 }) {
   const { feConfigs } = useSystemStore();
   const { t } = useTranslation();
-  const { publishT } = useI18n();
-  const {
-    register,
-    setValue,
-    watch,
-    handleSubmit: submitShareChat
-  } = useForm({
+  const publishT = useTranslation('publish').t;
+  const { toast } = useToast();
+  const { register, handleSubmit, watch, setValue, reset } = useForm<OutLinkEditType>({
     defaultValues: defaultData
   });
+
+  useEffect(() => {
+    // 自动生成 authToken
+    const userId = 'user_' + Date.now(); // 这里替换为实际的用户ID生成逻辑
+    const authToken = generateAuthToken(userId);
+    setValue('limit.hookUrl', authToken);
+  }, [setValue]);
 
   const responseDetail = watch('responseDetail');
   const showRawSource = watch('showRawSource');
@@ -451,7 +470,7 @@ function EditLinkModal({
         </Button>
         <Button
           isLoading={creating || updating}
-          onClick={submitShareChat((data) => (isEdit ? onclickUpdate(data) : onclickCreate(data)))}
+          onClick={handleSubmit((data) => (isEdit ? onclickUpdate(data) : onclickCreate(data)))}
         >
           {t('common:common.Confirm')}
         </Button>

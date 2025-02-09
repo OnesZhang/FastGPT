@@ -37,6 +37,7 @@ import { useChatStore } from '@/web/core/chat/context/useChatStore';
 import { ChatSourceEnum } from '@fastgpt/global/core/chat/constants';
 import { useI18nLng } from '@fastgpt/web/hooks/useI18n';
 import { AppSchema } from '@fastgpt/global/core/app/type';
+import { authOutLinkInit } from '@/service/support/permission/auth/outLink';
 
 const CustomPluginRunBox = dynamic(() => import('@/pageComponents/chat/CustomPluginRunBox'));
 
@@ -69,6 +70,15 @@ const OutLink = (props: Props) => {
     authToken: string;
     [key: string]: string;
   };
+
+  // 如果没有认证信息，跳转到无权限页面
+  useEffect(() => {
+    if (!authToken && !customUid) {
+      router.push('/chat/unauthorized');
+      return;
+    }
+  }, [authToken, customUid, router]);
+
   const { isPc } = useSystem();
   const { outLinkAuthData, appId, chatId } = useChatStore();
 
@@ -364,10 +374,20 @@ export async function getServerSideProps(context: any) {
   const authToken = context?.query?.authToken || '';
   const customUid = context?.query?.customUid || '';
 
+  // 验证 authToken
+  if (!authToken && !customUid) {
+    return {
+      redirect: {
+        destination: '/chat/unauthorized',
+        permanent: false
+      }
+    };
+  }
+
   const app = await (async () => {
     try {
       await connectToDatabase();
-      return MongoOutLink.findOne(
+      const outLink = await MongoOutLink.findOne(
         {
           shareId
         },
@@ -375,11 +395,37 @@ export async function getServerSideProps(context: any) {
       )
         .populate<{ associatedApp: AppSchema }>('associatedApp', 'name avatar intro')
         .lean();
+
+      if (!outLink) {
+        return undefined;
+      }
+
+      // 验证 token
+      try {
+        await authOutLinkInit({
+          outLinkUid: authToken || customUid
+        });
+      } catch (error) {
+        console.log('auth token error:', error);
+        return undefined;
+      }
+
+      return outLink;
     } catch (error) {
       addLog.error('getServerSideProps', error);
       return undefined;
     }
   })();
+
+  // 如果验证失败或找不到应用，跳转到无权限页面
+  if (!app) {
+    return {
+      redirect: {
+        destination: '/chat/unauthorized',
+        permanent: false
+      }
+    };
+  }
 
   return {
     props: {

@@ -59,7 +59,11 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
         <SystemStoreContextProvider device={pageProps.deviceSize}>
           <I18nContextProvider>
             <ChakraUIContext>
-              <Layout>{setLayout(<Component {...pageProps} />)}</Layout>
+              {Component.setLayout ? (
+                setLayout(<Component {...pageProps} />)
+              ) : (
+                <Layout>{setLayout(<Component {...pageProps} />)}</Layout>
+              )}
             </ChakraUIContext>
           </I18nContextProvider>
         </SystemStoreContextProvider>
