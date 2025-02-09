@@ -166,24 +166,24 @@ const Dataset = () => {
                           description: t('dataset:external_file_dataset_desc'),
                           onClick: () => onSelectDatasetType(DatasetTypeEnum.apiDataset)
                         },
-                        {
-                          icon: 'core/dataset/websiteDatasetColor',
-                          label: t('dataset:website_dataset'),
-                          description: t('dataset:website_dataset_desc'),
-                          onClick: () => onSelectDatasetType(DatasetTypeEnum.websiteDataset)
-                        },
-                        {
-                          icon: 'core/dataset/feishuDatasetColor',
-                          label: t('dataset:feishu_dataset'),
-                          description: t('dataset:feishu_dataset_desc'),
-                          onClick: () => onSelectDatasetType(DatasetTypeEnum.feishu)
-                        },
-                        {
-                          icon: 'core/dataset/yuqueDatasetColor',
-                          label: t('dataset:yuque_dataset'),
-                          description: t('dataset:yuque_dataset_desc'),
-                          onClick: () => onSelectDatasetType(DatasetTypeEnum.yuque)
-                        }
+                        // {
+                        //   icon: 'core/dataset/websiteDatasetColor',
+                        //   label: t('dataset:website_dataset'),
+                        //   description: t('dataset:website_dataset_desc'),
+                        //   onClick: () => onSelectDatasetType(DatasetTypeEnum.websiteDataset)
+                        // },
+                        // {
+                        //   icon: 'core/dataset/feishuDatasetColor',
+                        //   label: t('dataset:feishu_dataset'),
+                        //   description: t('dataset:feishu_dataset_desc'),
+                        //   onClick: () => onSelectDatasetType(DatasetTypeEnum.feishu)
+                        // },
+                        // {
+                        //   icon: 'core/dataset/yuqueDatasetColor',
+                        //   label: t('dataset:yuque_dataset'),
+                        //   description: t('dataset:yuque_dataset_desc'),
+                        //   onClick: () => onSelectDatasetType(DatasetTypeEnum.yuque)
+                        // }
                       ]
                     },
                     {
