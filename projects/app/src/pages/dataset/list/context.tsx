@@ -167,7 +167,7 @@ function DatasetContextProvider({ children }: { children: React.ReactNode }) {
           title={t('common:Move')}
           onClose={() => setMoveDatasetId(undefined)}
           onConfirm={(parentId) => onMoveDataset(parentId)}
-          moveHint={t('dataset:move.hint')}
+          // moveHint={t('dataset:move.hint')}
         />
       )}
     </DatasetsContext.Provider>

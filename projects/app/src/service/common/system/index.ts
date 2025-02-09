@@ -51,15 +51,15 @@ export async function getInitConfig() {
 
 const defaultFeConfigs: FastGPTFeConfigsType = {
   show_emptyChat: true,
-  show_git: true,
+  show_git: false,
   docUrl: 'https://doc.tryfastgpt.ai',
   openAPIDocUrl: 'https://doc.tryfastgpt.ai/docs/development/openapi',
-  systemPluginCourseUrl: 'https://fael3z0zfze.feishu.cn/wiki/ERZnw9R26iRRG0kXZRec6WL9nwh',
+  systemPluginCourseUrl: 'https://u5vvd64z9t.feishu.cn/docx/HDWNdBQp1oH8mhxeVyNcdZH7nKe',
   appTemplateCourse:
     'https://fael3z0zfze.feishu.cn/wiki/CX9wwMGyEi5TL6koiLYcg7U0nWb?fromScene=spaceOverview',
   systemTitle: 'FastGPT',
-  concatMd:
-    '项目开源地址: [FastGPT GitHub](https://github.com/labring/FastGPT)\n交流群: ![](https://oss.laf.run/otnvvf-imgs/fastgpt-feishu1.png)',
+  // concatMd:
+  //   '请联系企业管理员',
   limit: {
     exportDatasetLimitMinutes: 0,
     websiteSyncLimitMinuted: 0
