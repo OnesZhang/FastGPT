@@ -167,7 +167,7 @@ const AppListContextProvider = ({ children }: { children: ReactNode }) => {
           title={t('app:move_app')}
           onClose={() => setMoveAppId(undefined)}
           onConfirm={onMoveApp}
-          moveHint={t('app:move.hint')}
+          // moveHint={t('app:move.hint')}
         />
       )}
     </AppListContext.Provider>
