@@ -87,9 +87,9 @@ const Share = ({ appId }: { appId: string; type: PublishChannelEnum }) => {
           size={['sm', 'md']}
           {...(shareChatList.length >= 10
             ? {
-                isDisabled: true,
-                title: t('common:core.app.share.Amount limit tip')
-              }
+              isDisabled: true,
+              title: t('common:core.app.share.Amount limit tip')
+            }
             : {})}
           onClick={() => setEditLinkData(defaultOutLinkForm)}
         >
@@ -108,12 +108,12 @@ const Share = ({ appId }: { appId: string; type: PublishChannelEnum }) => {
               )}
               <Th>{t('common:support.outlink.Usage points')}</Th>
               <Th>{t('common:core.app.share.Is response quote')}</Th>
-              {feConfigs?.isPlus && (
-                <>
-                  <Th>{t('common:core.app.share.Ip limit title')}</Th>
-                  <Th>{t('common:core.app.share.Role check')}</Th>
-                </>
-              )}
+              {/* {feConfigs?.isPlus && ( */}
+              <>
+                <Th>{t('common:core.app.share.Ip limit title')}</Th>
+                <Th>{t('common:core.app.share.Role check')}</Th>
+              </>
+              {/* )} */}
               <Th>{t('common:common.Last use time')}</Th>
               <Th></Th>
             </Tr>
@@ -134,21 +134,20 @@ const Share = ({ appId }: { appId: string; type: PublishChannelEnum }) => {
                 <Td>
                   {Math.round(item.usagePoints)}
                   {feConfigs?.isPlus
-                    ? `${
-                        item.limit?.maxUsagePoints && item.limit.maxUsagePoints > -1
-                          ? ` / ${item.limit.maxUsagePoints}`
-                          : ` / ${t('common:common.Unlimited')}`
-                      }`
+                    ? `${item.limit?.maxUsagePoints && item.limit.maxUsagePoints > -1
+                      ? ` / ${item.limit.maxUsagePoints}`
+                      : ` / ${t('common:common.Unlimited')}`
+                    }`
                     : ''}
                 </Td>
                 <Td>{item.responseDetail ? '✔' : '✖'}</Td>
-                {feConfigs?.isPlus && (
-                  <>
-                    <Td>{item?.limit?.QPM || '-'}</Td>
+                {/* {feConfigs?.isPlus && ( */}
+                <>
+                  <Td>{item?.limit?.QPM || '-'}</Td>
 
-                    <Th>{item?.limit?.hookUrl ? '✔' : '✖'}</Th>
-                  </>
-                )}
+                  <Th>{item?.limit?.hookUrl ? '✔' : '✖'}</Th>
+                </>
+                {/* )} */}
                 <Td>
                   {item.lastTime
                     ? t(formatTimeToChatTime(item.lastTime) as any).replace('#', ':')
@@ -332,6 +331,34 @@ function EditLinkModal({
               })}
             />
           </Flex>
+          <>
+            <Flex alignItems={'center'} mt={4}>
+              <Flex flex={'0 0 90px'} alignItems={'center'}>
+                <FormLabel>QPM</FormLabel>
+                <QuestionTip ml={1} label={publishT('qpm_tips' || '')}></QuestionTip>
+              </Flex>
+              <Input
+                max={1000}
+                {...register('limit.QPM', {
+                  min: 0,
+                  max: 1000,
+                  valueAsNumber: true,
+                  required: publishT('qpm_is_empty') || ''
+                })}
+              />
+            </Flex>
+            <Flex alignItems={'center'} mt={4}>
+              <Flex flex={'0 0 90px'} alignItems={'center'}>
+                <FormLabel>{publishT('token_auth')}</FormLabel>
+                <QuestionTip ml={1} label={publishT('token_auth_tips') || ''}></QuestionTip>
+              </Flex>
+              <Input
+                placeholder={publishT('token_auth_tips') || ''}
+                fontSize={'sm'}
+                {...register('limit.hookUrl')}
+              />
+            </Flex>
+          </>
           {feConfigs?.isPlus && (
             <>
               <Flex alignItems={'center'} mt={4}>
@@ -350,21 +377,7 @@ function EditLinkModal({
                   }}
                 />
               </Flex>
-              <Flex alignItems={'center'} mt={4}>
-                <Flex flex={'0 0 90px'} alignItems={'center'}>
-                  <FormLabel>QPM</FormLabel>
-                  <QuestionTip ml={1} label={publishT('qpm_tips' || '')}></QuestionTip>
-                </Flex>
-                <Input
-                  max={1000}
-                  {...register('limit.QPM', {
-                    min: 0,
-                    max: 1000,
-                    valueAsNumber: true,
-                    required: publishT('qpm_is_empty') || ''
-                  })}
-                />
-              </Flex>
+
               <Flex alignItems={'center'} mt={4}>
                 <Flex flex={'0 0 90px'} alignItems={'center'}>
                   <FormLabel>{t('common:support.outlink.Max usage points')}</FormLabel>
@@ -383,17 +396,7 @@ function EditLinkModal({
                 />
               </Flex>
 
-              <Flex alignItems={'center'} mt={4}>
-                <Flex flex={'0 0 90px'} alignItems={'center'}>
-                  <FormLabel>{publishT('token_auth')}</FormLabel>
-                  <QuestionTip ml={1} label={publishT('token_auth_tips') || ''}></QuestionTip>
-                </Flex>
-                <Input
-                  placeholder={publishT('token_auth_tips') || ''}
-                  fontSize={'sm'}
-                  {...register('limit.hookUrl')}
-                />
-              </Flex>
+
               <Link
                 href={getDocPath('/docs/development/openapi/share')}
                 target={'_blank'}
