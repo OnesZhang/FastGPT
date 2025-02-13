@@ -12,14 +12,16 @@ import { AuthUserTypeEnum } from '@fastgpt/global/support/permission/constant';
 import { OutLinkErrEnum } from '@fastgpt/global/common/error/code/outLink';
 import { OutLinkSchema } from '@fastgpt/global/support/outLink/type';
 
+const url = "http://localhost:3000";
+
 export function authOutLinkInit(data: AuthOutLinkInitProps): Promise<AuthOutLinkResponse> {
   // if (!global.feConfigs?.isPlus) return Promise.resolve({ uid: data.outLinkUid });
-  return axios.post('/api/core/chat/outLink/shareAuth/init', data).then(res => res.data);
+  return axios.post(`${url}/api/core/chat/outLink/shareAuth/init`, data).then(res => res.data);
 }
 
 export function authOutLinkChatLimit(data: AuthOutLinkLimitProps): Promise<AuthOutLinkResponse> {
   // if (!global.feConfigs?.isPlus) return Promise.resolve({ uid: data.outLinkUid });
-  return axios.post('/api/core/chat/outLink/shareAuth/start', data).then(res => res.data);
+  return axios.post(`${url}/api/core/chat/outLink/shareAuth/start`, data).then(res => res.data);
 }
 
 export const authOutLink = async ({

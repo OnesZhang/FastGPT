@@ -3,28 +3,64 @@ import { jsonRes } from '@fastgpt/service/common/response';
 import { OutLinkErrEnum } from '@fastgpt/global/common/error/code/outLink';
 import { AuthOutLinkInitProps } from '@fastgpt/global/support/outLink/api.d';
 import { NextAPI } from '@/service/middleware/entry';
+import crypto from 'crypto';
+import outLinkErrList from '@fastgpt/global/common/error/code/outLink';
+
+// 验证 token 的函数
+function verifyAuthToken(token: string, secretKey: string) {
+  try {
+    const [userId, timestamp, signature] = token.split('i');
+    
+    // 验证时间戳（例如：token 有效期为 24 小时）
+    const tokenTime = parseInt(timestamp);
+    const currentTime = Date.now();
+    if (currentTime - tokenTime > 24 * 60 * 60 * 1000) {
+      throw new Error('Token has expired');
+    }
+
+    // 重新计算签名
+    const data = `${userId}i${timestamp}`;
+    const expectedSignature = crypto
+      .createHmac('sha256', secretKey)
+      .update(data)
+      .digest('hex');
+
+    // 验证签名是否匹配
+    if (signature !== expectedSignature) {
+      throw new Error('Invalid signature');
+    }
+
+    return userId;
+  } catch (error) {
+    throw new Error('Invalid token format');
+  }
+}
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { outLinkUid: token } = req.body as AuthOutLinkInitProps;
 
   try {
-    // 这里可以添加自定义的token验证逻辑
     if (!token) {
       throw new Error('Token is required');
     }
 
+    // 从环境变量获取密钥
+    const secretKey = process.env.TOKEN_KEY || '';
+    if (!secretKey) {
+      throw new Error('Secret key is not configured');
+    }
+
+    // 验证 token 并获取用户 ID
+    const userId = verifyAuthToken(token, secretKey);
+
     // 验证成功，返回用户唯一凭证
     jsonRes(res, {
       data: {
-        uid: token // 这里可以根据需要生成或映射用户唯一凭证
+        uid: userId
       }
     });
   } catch (error: any) {
-    jsonRes(res, {
-      code: 401,
-      message: error.message || 'Authentication failed',
-      data: null
-    });
+    jsonRes(res, outLinkErrList[OutLinkErrEnum.unAuthUser]);
   }
 }
 
