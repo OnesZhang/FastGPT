@@ -4,7 +4,6 @@ import { OutLinkErrEnum } from '@fastgpt/global/common/error/code/outLink';
 import { AuthOutLinkLimitProps } from '@fastgpt/global/support/outLink/api.d';
 import { NextAPI } from '@/service/middleware/entry';
 import crypto from 'crypto';
-import outLinkErrList from '@fastgpt/global/common/error/code/outLink';
 
 // 验证 token 的函数
 function verifyAuthToken(token: string, secretKey: string) {
@@ -46,7 +45,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     // 从环境变量获取密钥
-    const secretKey = process.env.TOKEN_KEY || '';
+    const secretKey = process.env.SHARE_AUTH_SECRET_KEY || '';
     if (!secretKey) {
       throw new Error('Secret key is not configured');
     }
@@ -72,7 +71,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     });
   } catch (error: any) {
-    jsonRes(res, outLinkErrList[OutLinkErrEnum.unAuthUser]);
+    jsonRes(res, {
+      code: 401,
+      message: error.message || 'Authentication failed',
+      data: null,
+      error: OutLinkErrEnum.unAuthUser
+    });
   }
 }
 
