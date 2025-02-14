@@ -1,4 +1,4 @@
-import { POST } from '@fastgpt/service/common/api/plusRequest';
+import axios from 'axios';
 import type {
   AuthOutLinkChatProps,
   AuthOutLinkLimitProps,
@@ -12,13 +12,16 @@ import { AuthUserTypeEnum } from '@fastgpt/global/support/permission/constant';
 import { OutLinkErrEnum } from '@fastgpt/global/common/error/code/outLink';
 import { OutLinkSchema } from '@fastgpt/global/support/outLink/type';
 
+const url = "http://localhost:3000";
+
 export function authOutLinkInit(data: AuthOutLinkInitProps): Promise<AuthOutLinkResponse> {
-  if (!global.feConfigs?.isPlus) return Promise.resolve({ uid: data.outLinkUid });
-  return POST<AuthOutLinkResponse>('/support/outLink/authInit', data);
+  if (!data.tokenUrl) return Promise.resolve({ uid: data.outLinkUid });
+  return axios.post(`${url}/api/core/chat/outLink/shareAuth/init`, data).then(res => res.data.data);
 }
+
 export function authOutLinkChatLimit(data: AuthOutLinkLimitProps): Promise<AuthOutLinkResponse> {
-  if (!global.feConfigs?.isPlus) return Promise.resolve({ uid: data.outLinkUid });
-  return POST<AuthOutLinkResponse>('/support/outLink/authChatStart', data);
+  if (!data.outLink.limit?.hookUrl) return Promise.resolve({ uid: data.outLinkUid });
+  return axios.post(`${url}/api/core/chat/outLink/shareAuth/start`, data).then(res => res.data.data);
 }
 
 export const authOutLink = async ({
@@ -38,6 +41,8 @@ export const authOutLink = async ({
     outLinkUid,
     tokenUrl: result.outLinkConfig.limit?.hookUrl
   });
+  
+  console.log(uid);
 
   return {
     ...result,
