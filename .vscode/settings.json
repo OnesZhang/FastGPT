@@ -27,5 +27,10 @@
     },
     "markdown.copyFiles.destination": {
         "/docSite/content/**/*": "${documentWorkspaceFolder}/docSite/assets/imgs/"
+    },
+    "markdown.copyFiles.overwriteBehavior": "nameIncrementally",
+    "markdown.copyFiles.transformPath": "const filename = uri.path.split('/').pop(); return `/imgs/${filename}`;",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
     }
 }
