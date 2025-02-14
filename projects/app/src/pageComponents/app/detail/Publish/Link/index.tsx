@@ -350,13 +350,26 @@ function EditLinkModal({
             <Flex alignItems={'center'} mt={4}>
               <Flex flex={'0 0 90px'} alignItems={'center'}>
                 <FormLabel>{publishT('token_auth')}</FormLabel>
-                <QuestionTip ml={1} label={publishT('token_auth_tips') || ''}></QuestionTip>
+                {/* <QuestionTip ml={1} label={publishT('token_auth_tips') || ''}></QuestionTip> */}
               </Flex>
-              <Input
-                placeholder={publishT('token_auth_tips') || ''}
-                fontSize={'sm'}
-                {...register('limit.hookUrl')}
-              />
+              <Flex flex={1} alignItems={'center'}>
+                <Switch
+                  mr={3}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setValue('limit.hookUrl', '1');
+                    } else {
+                      setValue('limit.hookUrl', '');
+                    }
+                  }}
+                  isChecked={!!watch('limit.hookUrl')}
+                />
+                {/* <Input
+                  placeholder={publishT('token_auth_tips') || ''}
+                  fontSize={'sm'}
+                  {...register('limit.hookUrl')}
+                /> */}
+              </Flex>
             </Flex>
           </>
           {feConfigs?.isPlus && (
