@@ -12,7 +12,7 @@ import { AuthUserTypeEnum } from '@fastgpt/global/support/permission/constant';
 import { OutLinkErrEnum } from '@fastgpt/global/common/error/code/outLink';
 import { OutLinkSchema } from '@fastgpt/global/support/outLink/type';
 
-const url = "http://localhost:3000";
+const url = process.env.AUTH_SERVICE_URL || '';
 
 export function authOutLinkInit(data: AuthOutLinkInitProps): Promise<AuthOutLinkResponse> {
   if (!data.tokenUrl) return Promise.resolve({ uid: data.outLinkUid });
