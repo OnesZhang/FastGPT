@@ -137,7 +137,7 @@ export const TrainingTypeMap = {
   [TrainingModeEnum.auto]: {
     label: i18nT('common:core.dataset.training.Auto mode'),
     tooltip: i18nT('common:core.dataset.training.Auto mode Tip'),
-    openSource: false
+    openSource: true
   },
   [TrainingModeEnum.qa]: {
     label: i18nT('common:core.dataset.training.QA mode'),
