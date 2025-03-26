@@ -335,7 +335,7 @@ function EditLinkModal({
             <Flex alignItems={'center'} mt={4}>
               <Flex flex={'0 0 90px'} alignItems={'center'}>
                 <FormLabel>QPM</FormLabel>
-                <QuestionTip ml={1} label={publishT('qpm_tips' || '')}></QuestionTip>
+                <QuestionTip ml={1} label={t('publish:qpm_tips')}></QuestionTip>
               </Flex>
               <Input
                 max={1000}
@@ -343,13 +343,13 @@ function EditLinkModal({
                   min: 0,
                   max: 1000,
                   valueAsNumber: true,
-                  required: publishT('qpm_is_empty') || ''
+                  required: t('publish:qpm_is_empty')
                 })}
               />
             </Flex>
             <Flex alignItems={'center'} mt={4}>
               <Flex flex={'0 0 90px'} alignItems={'center'}>
-                <FormLabel>{publishT('token_auth')}</FormLabel>
+                <FormLabel>{t('common:support.outlink.Max usage points')}</FormLabel>
                 {/* <QuestionTip ml={1} label={publishT('token_auth_tips') || ''}></QuestionTip> */}
               </Flex>
               <Flex flex={1} alignItems={'center'}>
@@ -365,7 +365,7 @@ function EditLinkModal({
                   isChecked={!!watch('limit.hookUrl')}
                 />
                 {/* <Input
-                  placeholder={publishT('token_auth_tips') || ''}
+                  placeholder={t('publish:token_auth_tips')}
                   fontSize={'sm'}
                   {...register('limit.hookUrl')}
                 /> */}
