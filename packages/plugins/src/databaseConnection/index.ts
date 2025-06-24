@@ -61,7 +61,8 @@ const main = async ({
         user,
         password,
         options: {
-          trustServerCertificate: true
+          trustServerCertificate: true,
+          encrypt: false // 禁用加密
         }
       });
 
